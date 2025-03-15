@@ -1,7 +1,10 @@
-package com.learning.ratelimiter;
+package com.learning.ratelimiter.controller;
 
 
+import com.learning.ratelimiter.service.RateLimiterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,13 +22,13 @@ public class RateLimiterController {
     }
 
     @GetMapping("/request")
-    public String handleRequest(@RequestParam String clientID) {
+    public ResponseEntity<String> handleRequest(@RequestParam String clientID) {
         if (rateLimiterService.allowRequest(clientID)) {
-            System.out.println("Requst allowed successfully");
-            return "Requst allowed successfully";
+            System.out.println("Request allowed successfully");
+            return ResponseEntity.ok("Request allowed successfully");
         } else {
             System.out.println("Request denied due to rate limit exceeded");
-            return "Request denied due to rate limit exceeded";
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Request denied due to rate limit exceeded");
         }
     }
 }

@@ -1,5 +1,6 @@
-package com.learning.ratelimiter;
+package com.learning.ratelimiter.service;
 
+import com.learning.ratelimiter.RedisTokenBucket;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
